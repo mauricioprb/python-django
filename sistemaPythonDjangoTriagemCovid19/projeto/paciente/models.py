@@ -28,6 +28,8 @@ class Paciente(models.Model):
     sexo = models.CharField('Sexo *', max_length=10, choices=SEXO, blank=False, null=True, help_text='* Campos obrigatórios')
     data_nascimento = models.DateField('Data de nascimento *', blank=False, null=True, max_length=10, help_text='Use dd/mm/aaaa')
 
+    comorbidades = models.TextField('Comorbidade', blank=True, null=True, help_text='Deixe em branco caso não possua')
+
     is_active = models.BooleanField('Ativo', default=False, help_text='Se ativo, o paciente pode realizar triagens e consultas')
     slug = models.SlugField('Hash',max_length= 200,null=True,blank=True)
 

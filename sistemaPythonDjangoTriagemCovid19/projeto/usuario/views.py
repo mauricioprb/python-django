@@ -12,12 +12,43 @@ from mail_templated import EmailMessage
 from utils.decorators import LoginRequiredMixin, StaffRequiredMixin, EnfermeiroRequiredMixin
 
 from .models import Usuario
-# from .forms import UsuarioRegisterForm
 
+from .forms import BuscaUsuarioForm
 
 class UsuarioListView(LoginRequiredMixin, ListView):
     model = Usuario
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        if self.request.GET:
+            #quando ja tem dados filtrando
+            context['form'] = BuscaUsuarioForm(data=self.request.GET)
+        else:
+            #quando acessa sem dados filtrando
+            context['form'] = BuscaUsuarioForm()
+        return context
+
+    def get_queryset(self):                
+        qs = super().get_queryset().all()
+        
+        if self.request.GET:
+            #quando ja tem dados filtrando
+            form = BuscaUsuarioForm(data=self.request.GET)
+        else:
+            #quando acessa sem dados filtrando
+            form = BuscaUsuarioForm()
+
+        if form.is_valid():            
+            nome = form.cleaned_data.get('nome')
+            tipo = form.cleaned_data.get('tipo')
+                        
+            if nome:
+                qs = qs.filter(nome__contains=nome)
+
+            if tipo:
+                qs = qs.filter(tipo=tipo)
+            
+        return qs
 
 class UsuarioCreateView(LoginRequiredMixin, StaffRequiredMixin, CreateView):
     model = Usuario
@@ -55,4 +86,3 @@ class UsuarioDeleteView(LoginRequiredMixin, StaffRequiredMixin, DeleteView):
         except Exception as e:
             messages.error(request, 'Há dependências ligadas à esse usuário, permissão negada!')
         return redirect(self.success_url)
-

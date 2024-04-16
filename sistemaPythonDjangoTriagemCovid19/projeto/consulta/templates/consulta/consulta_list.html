@@ -18,7 +18,8 @@
 			<th>Data</th>
 			<th>Hora</th>
 			<th>Paciente</th>
-			<th>Médico</th>						
+			<th>Médico</th>
+            <th>Responsável Triagem</th>
   			<th class="text-center">Editar</th>
   			<th class="text-center">Excluir</th>
   		</thead>
@@ -30,7 +31,8 @@
 					<td>{{ consulta.data|date:'d/m/Y' }}</td>
 					<td>{{ consulta.hora }}</td>
 					<td>{{ consulta.paciente_triagem.paciente2.nome }}</td>
-					<td>{{ consulta.medico }}</td>					
+					<td>{{ consulta.medico }}</td>
+                    <td>{{ consulta.paciente_triagem.responsavel }}</td>
 					<td class="text-center">
 						{% bootstrap_button content='' href=consulta.get_absolute_url button_type='link' icon='edit' button_class='btn btn-primary' size='sm' %}
 					</td>

@@ -14,6 +14,7 @@
 	<table class="table table-hover">
   		<thead>
   			<th>Nome</th>
+            <th>Comorbidades</th>
 			<th class="text-center">Sexo</th>
 			<th class="text-center">Idade</th>		
 			<th class="text-center">Ativo</th>
@@ -25,6 +26,7 @@
   			{% for paciente in object_list %}
 				<tr>
 					<td>{{ paciente.nome }}</td>
+                    <td>{{ paciente.comorbidades }}</td>
 					<td class="text-center">{{ paciente.sexo }}</td>
 					<td class="text-center">{{ paciente.idade }}</td>					
 					<td class="text-center">
